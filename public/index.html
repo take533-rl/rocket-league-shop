@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocket League Item Shop Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #06090e;
+      --panel-bg: rgba(15, 23, 36, 0.75);
+      --accent-cyan: #00f0ff;
+      --accent-pink: #ff0055;
+      --accent-purple: #7928ca;
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --border-glow: rgba(0, 240, 255, 0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.08) 0%, transparent 40%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    /* Navbar Header */
+    header {
+      max-width: 1100px;
+      margin: 0 auto 40px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--panel-bg);
+      backdrop-filter: blur(12px);
+      padding: 20px 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent-cyan), #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; }
+
+    .header-actions { display: flex; align-items: center; gap: 15px; }
+
+    .timer-box {
+      background: rgba(255, 0, 85, 0.1);
+      border: 1px solid rgba(255, 0, 85, 0.3);
+      padding: 8px 16px;
+      border-radius: 12px;
+      color: var(--accent-pink);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .lang-btn {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+      border: none;
+      color: white;
+      padding: 9px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lang-btn:hover { transform: translateY(-2px); }
+
+    /* Container */
+    .shop-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Accordion Section */
+    .accordion-card {
+      background: var(--panel-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+    .accordion-card.active {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 25px var(--border-glow);
+    }
+
+    .accordion-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 22px 28px;
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .accordion-btn:hover { background: rgba(255, 255, 255, 0.02); }
+
+    /* تحسين تنظيم الأ عنوان والعداد داخل الزر لمنع التداخل */
+    .accordion-title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .badge {
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .arrow-icon {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .accordion-card.active .arrow-icon { transform: rotate(180deg); color: var(--accent-cyan); }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 28px;
+    }
+    .accordion-card.active .accordion-body {
+      max-height: 5000px;
+      padding: 10px 28px 28px 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sub-group-title {
+      font-size: 1.1rem;
+      color: var(--accent-cyan);
+      margin: 25px 0 15px 0;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+    }
+
+    /* Cards Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+
+    .item-card {
+      background: rgba(8, 12, 18, 0.8);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+    .item-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.25);
+    }
+
+    .item-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #000;
+      display: block;
+    }
+
+    .card-details { padding: 15px; text-align: right; }
+    body[dir="ltr"] .card-details { text-align: left; }
+
+    .item-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-type { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 12px; }
+
+    .price-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, var(--accent-cyan), #0072ff);
+      color: #000;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1 id="txt-title">متجر روكيت ليغ اليومي</h1>
+      <p id="txt-subtitle">تحديث تلقائي مستمر لجميع العناصر والحزم</p>
+    </div>
+    <div class="header-actions">
+      <div class="timer-box" id="countdown">--:--:--</div>
+      <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">English</button>
+    </div>
+  </header>
+
+  <main class="shop-container" id="shop-container">
+    <div style="text-align: center; color: var(--text-secondary); padding: 50px;">
+      <p id="txt-loading">جاري جلب بيانات المتجر وتنسيق الحزم...</p>
+    </div>
+  </main>
+
+  <script>
+    let currentLang = 'ar';
+    let rawShopData = {};
+
+    const dict = {
+      ar: {
+        title: "متجر روكيت ليغ اليومي",
+        subtitle: "تحديث تلقائي مستمر لجميع العناصر والحزم",
+        loading: "جاري جلب بيانات المتجر وتنسيق الحزم...",
+        empty: "لا توجد عناصر متاحة حالياً.",
+        error: "تعذر تحميل المتجر حاليًا.",
+        items: "عناصر",
+        timerPrefix: "التحديث خلال: ",
+        langBtn: "English"
+      },
+      en: {
+        title: "Rocket League Item Shop",
+        subtitle: "Live automated updates for all shop items & bundles",
+        loading: "Fetching shop data & grouping bundles...",
+        empty: "No items available right now.",
+        error: "Failed to load shop items.",
+        items: "Items",
+        timerPrefix: "Resets in: ",
+        langBtn: "عربي"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      
+      document.getElementById('txt-title').innerText = dict[currentLang].title;
+      document.getElementById('txt-subtitle').innerText = dict[currentLang].subtitle;
+      document.getElementById('lang-btn').innerText = dict[currentLang].langBtn;
+      
+      renderShop();
+    }
+
+    async function fetchShopData() {
+      try {
+        const response = await fetch('/api/shop');
+        if (!response.ok) throw new Error();
+        const data = await response.json();
+        rawShopData = data.categories || {};
+        renderShop();
+      } catch (err) {
+        document.getElementById('shop-container').innerHTML = `<p style="text-align:center; color: var(--accent-pink);">${dict[currentLang].error}</p>`;
+      }
+    }
+
+    function groupItemsIntelligently(items) {
+      const groups = {};
+      items.forEach(item => {
+        let subGroupName = "عناصر متفرقة / General Items";
+        if (item.name.includes("Bundle")) {
+          subGroupName = item.name;
+        } else if (item.name.includes(":")) {
+          subGroupName = item.name.split(":")[0];
+        } else if (item.category && item.category !== 'Item') {
+          subGroupName = item.category;
+        }
+        if (!groups[subGroupName]) groups[subGroupName] = [];
+        groups[subGroupName].push(item);
+      });
+      return groups;
+    }
+
+    function renderShop() {
+      const container = document.getElementById('shop-container');
+      if (Object.keys(rawShopData).length === 0) {
+        container.innerHTML = `<p style="text-align:center; color: var(--text-secondary);">${dict[currentLang].empty}</p>`;
+        return;
+      }
+
+      container.innerHTML = '';
+
+      for (const [sectionName, items] of Object.entries(rawShopData)) {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'accordion-card';
+        const subGroups = groupItemsIntelligently(items);
+
+        let subSectionsHtml = '';
+        for (const [subTitle, subItems] of Object.entries(subGroups)) {
+          const cards = subItems.map(item => `
+            <div class="item-card">
+              <img src="${item.image || 'https://via.placeholder.com/300x200?text=Rocket+League'}" alt="${item.name}">
+              <div class="card-details">
+                <div class="item-title">${item.name}</div>
+                <div class="item-type">${item.category}</div>
+                <div class="price-badge"><span>⚡</span> ${item.price} CR</div>
+              </div>
+            </div>
+          `).join('');
+
+          subSectionsHtml += `
+            <div>
+              ${Object.keys(subGroups).length > 1 ? `<div class="sub-group-title">❖ ${subTitle}</div>` : ''}
+              <div class="grid">${cards}</div>
+            </div>
+          `;
+        }
+
+        cardDiv.innerHTML = `
+          <button class="accordion-btn" onclick="this.parentElement.classList.toggle('active')">
+            <div class="accordion-title-wrapper">
+              <span>${sectionName}</span>
+              <span class="badge">${items.length} ${dict[currentLang].items}</span>
+            </div>
+            <span class="arrow-icon">▼</span>
+          </button>
+          <div class="accordion-body">${subSectionsHtml}</div>
+        `;
+        container.appendChild(cardDiv);
+      }
+    }
+
+    function startCountdown() {
+      const timerElem = document.getElementById('countdown');
+      setInterval(() => {
+        const now = new Date();
+        const nextReset = new Date();
+        nextReset.setUTCHours(20, 0, 0, 0);
+        if (now > nextReset) nextReset.setUTCDate(nextReset.getUTCDate() + 1);
+        const diff = nextReset - now;
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
+        const m = Math.floor((diff / (1000 * 60)) % 60).toString().padStart(2, '0');
+        const s = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
+        timerElem.innerText = `${dict[currentLang].timerPrefix}${h}:${m}:${s}`;
+      }, 1000);
+    }
+
+    fetchShopData();
+    startCountdown();
+  </script>
+</body>
+</html>
