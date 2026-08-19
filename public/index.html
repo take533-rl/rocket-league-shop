@@ -113,7 +113,6 @@
     }
     .accordion-btn:hover { background: rgba(255, 255, 255, 0.02); }
 
-    /* تحسين تنظيم الأ عنوان والعداد داخل الزر لمنع التداخل */
     .accordion-title-wrapper {
       display: flex;
       align-items: center;
@@ -258,7 +257,16 @@
         const response = await fetch('/api/shop');
         if (!response.ok) throw new Error();
         const data = await response.json();
-        rawShopData = data.categories || {};
+        
+        // جلب البيانات بمرونة تامة بغض النظر عن المفتاح القادم من السيرفر
+        if (data.categories) {
+          rawShopData = data.categories;
+        } else if (Array.isArray(data)) {
+          rawShopData = { "عناصر المتجر اليومي": data };
+        } else {
+          rawShopData = data;
+        }
+
         renderShop();
       } catch (err) {
         document.getElementById('shop-container').innerHTML = `<p style="text-align:center; color: var(--accent-pink);">${dict[currentLang].error}</p>`;
@@ -269,9 +277,9 @@
       const groups = {};
       items.forEach(item => {
         let subGroupName = "عناصر متفرقة / General Items";
-        if (item.name.includes("Bundle")) {
+        if (item.name && item.name.includes("Bundle")) {
           subGroupName = item.name;
-        } else if (item.name.includes(":")) {
+        } else if (item.name && item.name.includes(":")) {
           subGroupName = item.name.split(":")[0];
         } else if (item.category && item.category !== 'Item') {
           subGroupName = item.category;
@@ -284,7 +292,7 @@
 
     function renderShop() {
       const container = document.getElementById('shop-container');
-      if (Object.keys(rawShopData).length === 0) {
+      if (!rawShopData || Object.keys(rawShopData).length === 0) {
         container.innerHTML = `<p style="text-align:center; color: var(--text-secondary);">${dict[currentLang].empty}</p>`;
         return;
       }
@@ -292,6 +300,7 @@
       container.innerHTML = '';
 
       for (const [sectionName, items] of Object.entries(rawShopData)) {
+        if (!Array.isArray(items)) continue;
         const cardDiv = document.createElement('div');
         cardDiv.className = 'accordion-card';
         const subGroups = groupItemsIntelligently(items);
@@ -300,11 +309,11 @@
         for (const [subTitle, subItems] of Object.entries(subGroups)) {
           const cards = subItems.map(item => `
             <div class="item-card">
-              <img src="${item.image || 'https://via.placeholder.com/300x200?text=Rocket+League'}" alt="${item.name}">
+              <img src="${item.image || 'https://via.placeholder.com/300x200?text=Rocket+League'}" alt="${item.name || 'Item'}">
               <div class="card-details">
-                <div class="item-title">${item.name}</div>
-                <div class="item-type">${item.category}</div>
-                <div class="price-badge"><span>⚡</span> ${item.price} CR</div>
+                <div class="item-title">${item.name || 'Unknown'}</div>
+                <div class="item-type">${item.category || ''}</div>
+                <div class="price-badge"><span>⚡</span> ${item.price || 0} CR</div>
               </div>
             </div>
           `).join('');
