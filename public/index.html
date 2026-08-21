@@ -279,22 +279,22 @@
         let name = item.name || '';
         let subGroupName = "عناصر متفرقة / General Items";
 
-        // فصل فرق الـ RLCS بدقة لكل فريق على حدة
-        const teams = ["Falcons", "NRG", "G2", "Vitality", "BDS", "Furia", "Complexity", "Moist", "Karmine Corp", "Liquid", "Rule One", "Spacestation", "FaZe", "OG"];
-        let matchedTeam = teams.find(team => name.toLowerCase().includes(team.toLowerCase()));
-
-        if (matchedTeam) {
-          subGroupName = `فريق ${matchedTeam} / ${matchedTeam}`;
+        // 1. فصل الحزم (Bundles أو Packs) بحيث تصبح كل حزمة مستقلة بذاتها تماماً بناءً على اسمها
+        if (name.toLowerCase().includes("bundle") || name.toLowerCase().includes("pack")) {
+          subGroupName = name; 
         }
-        // فصل الحزم (Bundles) بحيث تصبح كل حزمة مستقلة بذاتها
-        else if (name.toLowerCase().includes("bundle")) {
-          subGroupName = name;
-        }
+        // 2. فصل الفرق والـ Esports تلقائياً (التي غالباً تحتوي على علامة : أو تنتهي بأسماء واضحة)
         else if (name.includes(":")) {
-          subGroupName = name.split(":")[0];
+          subGroupName = name.split(":")[0].trim();
         } 
+        else if (item.category && (item.category.toLowerCase().includes('esports') || item.category.toLowerCase().includes('team'))) {
+          subGroupName = item.category;
+        }
         else if (item.category && item.category !== 'Item') {
           subGroupName = item.category;
+        }
+        else {
+          subGroupName = "عناصر أخرى / Other Items";
         }
 
         if (!groups[subGroupName]) groups[subGroupName] = [];
