@@ -258,7 +258,6 @@
         if (!response.ok) throw new Error();
         const data = await response.json();
         
-        // جلب البيانات بمرونة تامة بغض النظر عن المفتاح القادم من السيرفر
         if (data.categories) {
           rawShopData = data.categories;
         } else if (Array.isArray(data)) {
@@ -275,18 +274,33 @@
 
     function groupItemsIntelligently(items) {
       const groups = {};
+      
       items.forEach(item => {
+        let name = item.name || '';
         let subGroupName = "عناصر متفرقة / General Items";
-        if (item.name && item.name.includes("Bundle")) {
-          subGroupName = item.name;
-        } else if (item.name && item.name.includes(":")) {
-          subGroupName = item.name.split(":")[0];
-        } else if (item.category && item.category !== 'Item') {
+
+        // فصل فرق الـ RLCS بدقة لكل فريق على حدة
+        const teams = ["Falcons", "NRG", "G2", "Vitality", "BDS", "Furia", "Complexity", "Moist", "Karmine Corp", "Liquid", "Rule One", "Spacestation", "FaZe", "OG"];
+        let matchedTeam = teams.find(team => name.toLowerCase().includes(team.toLowerCase()));
+
+        if (matchedTeam) {
+          subGroupName = `فريق ${matchedTeam} / ${matchedTeam}`;
+        }
+        // فصل الحزم (Bundles) بحيث تصبح كل حزمة مستقلة بذاتها
+        else if (name.toLowerCase().includes("bundle")) {
+          subGroupName = name;
+        }
+        else if (name.includes(":")) {
+          subGroupName = name.split(":")[0];
+        } 
+        else if (item.category && item.category !== 'Item') {
           subGroupName = item.category;
         }
+
         if (!groups[subGroupName]) groups[subGroupName] = [];
         groups[subGroupName].push(item);
       });
+
       return groups;
     }
 
