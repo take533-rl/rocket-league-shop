@@ -6,196 +6,168 @@
   <title>RL Shop Matrix - Ultimate Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-core: #020408;
-      --card-surface: #0a111c;
-      --card-hover: #101c30;
-      --neon-cyan: #00ffcc;
-      --neon-orange: #ff5500;
-      --neon-magenta: #ff0077;
-      --text-main: #e2e8f0;
-      --text-dim: #64748b;
-      --border-line: rgba(0, 255, 204, 0.15);
+      --bg-core: #030305;
+      --panel-glass: rgba(12, 12, 20, 0.75);
+      --border-neon: rgba(130, 80, 255, 0.25);
+      --accent-purple: #8250ff;
+      --accent-neon: #00ffcc;
+      --accent-warning: #ffaa00;
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Changa', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
 
     body {
       background-color: var(--bg-core);
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(130, 80, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(0, 255, 204, 0.08) 0%, transparent 50%);
       color: var(--text-main);
       min-height: 100vh;
-      padding: 25px 15px;
+      padding: 20px;
       overflow-x: hidden;
     }
 
-    .app-wrapper {
-      max-width: 1400px;
+    .app-layout {
+      max-width: 1500px;
       margin: 0 auto;
-    }
-
-    /* =========================================
-       شريط التنقل العلوي المحدث والمقسم (Navbar)
-       ========================================= */
-    .cyber-nav {
-      background: var(--card-surface);
-      border: 1px solid var(--border-line);
-      border-radius: 20px;
-      padding: 18px 25px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 35px;
-      box-shadow: 0 0 35px rgba(0, 255, 204, 0.04);
+      grid-template-columns: 280px 1fr;
+      gap: 25px;
     }
 
-    @media (max-width: 900px) {
-      .cyber-nav {
+    @media (max-width: 1024px) {
+      .app-layout {
         grid-template-columns: 1fr;
-        text-align: center;
       }
     }
 
-    .nav-left {
+    /* Side Dashboard Controller */
+    .side-controller {
+      background: var(--panel-glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-neon);
+      border-radius: 24px;
+      padding: 25px;
       display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 30px;
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
 
-    @media (max-width: 900px) {
-      .nav-left {
-        flex-direction: column;
-        gap: 12px;
-      }
+    .brand-area h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent-neon), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .brand-box h1 {
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--neon-cyan);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+    .brand-area p {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 5px;
     }
 
-    .brand-box p {
-      color: var(--text-dim);
-      font-size: 0.8rem;
-      letter-spacing: 0.5px;
+    .hud-widget {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* مؤشر حالة السيرفر البرمجي */
-    .server-status-badge {
+    .hud-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .server-status {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 255, 204, 0.05);
-      border: 1px solid rgba(0, 255, 204, 0.2);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-family: 'Share Tech Mono', monospace;
-      color: var(--neon-cyan);
+      font-size: 0.85rem;
+      color: var(--accent-neon);
+      font-family: 'Orbitron', sans-serif;
     }
 
     .status-dot {
       width: 8px;
       height: 8px;
-      background: var(--neon-cyan);
+      background: var(--accent-neon);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--neon-cyan);
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 10px var(--accent-neon);
+      animation: pulse 1.5s infinite;
     }
 
     @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.4; }
-      100% { opacity: 1; }
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
-    /* القسم اليميني للأدوات (العداد وزر اللغة) */
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+    .timer-box {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-warning);
     }
 
-    @media (max-width: 900px) {
-      .nav-right {
-        justify-content: center;
-      }
-    }
-
-    .tool-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 6px 12px;
-      border-radius: 12px;
-    }
-
-    .tool-label {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-    }
-
-    .timer-display {
-      background: rgba(255, 85, 0, 0.1);
-      border: 1px solid rgba(255, 85, 0, 0.3);
-      color: var(--neon-orange);
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-family: 'Share Tech Mono', monospace;
+    .lang-btn-cyber {
+      background: linear-gradient(135deg, var(--accent-purple), #6020df);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      border-radius: 14px;
       font-weight: 700;
       font-size: 0.9rem;
-    }
-
-    .lang-switcher {
-      background: transparent;
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      padding: 8px 18px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.85rem;
       cursor: pointer;
       transition: 0.3s;
-    }
-    .lang-switcher:hover {
-      background: var(--neon-cyan);
-      color: var(--bg-core);
-      box-shadow: 0 0 15px var(--neon-cyan);
+      box-shadow: 0 4px 15px rgba(130, 80, 255, 0.3);
+      width: 100%;
     }
 
-    /* =========================================
-       التصنيفات والشبكة (Matrix & Tabs)
-       ========================================= */
-    .filter-tabs {
+    .lang-btn-cyber:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    /* Main Content Area */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    /* Horizontal Category Pills inside Main */
+    .filter-pills {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding-bottom: 15px;
-      margin-bottom: 25px;
+      padding-bottom: 10px;
       scrollbar-width: thin;
-      scrollbar-color: var(--neon-cyan) var(--card-surface);
+      scrollbar-color: var(--accent-purple) transparent;
     }
 
     .tab-btn {
-      background: var(--card-surface);
-      border: 1px solid var(--border-line);
-      color: var(--text-dim);
-      padding: 10px 22px;
-      border-radius: 10px;
-      font-size: 0.95rem;
+      background: var(--panel-glass);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
@@ -203,72 +175,78 @@
     }
 
     .tab-btn:hover, .tab-btn.active {
-      background: rgba(0, 255, 204, 0.08);
-      border-color: var(--neon-cyan);
-      color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      background: rgba(130, 80, 255, 0.15);
+      border-color: var(--accent-purple);
+      color: var(--accent-neon);
+      box-shadow: 0 0 15px rgba(130, 80, 255, 0.2);
     }
 
     .matrix-container {
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 30px;
     }
 
     .section-block {
-      background: rgba(10, 17, 28, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 20px;
+      background: var(--panel-glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
       padding: 25px;
     }
 
     .block-title {
-      font-size: 1.3rem;
-      color: var(--neon-cyan);
+      font-size: 1.2rem;
+      color: #fff;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      border-bottom: 1px dashed var(--border-line);
-      padding-bottom: 10px;
-      font-weight: 700;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 12px;
+    }
+
+    .block-title span.title-text {
+      color: var(--accent-neon);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
     }
 
     .block-title span.count {
-      background: rgba(0, 255, 204, 0.1);
-      color: var(--neon-cyan);
-      font-size: 0.8rem;
-      padding: 2px 10px;
-      border-radius: 6px;
-      font-family: 'Share Tech Mono', monospace;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 8px;
     }
 
     .items-matrix-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 18px;
     }
 
+    /* Gaming Card Design */
     .gaming-card {
-      background: var(--card-surface);
+      background: rgba(18, 18, 28, 0.8);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s;
+      transition: all 0.3s ease;
     }
 
     .gaming-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--neon-magenta);
-      box-shadow: 0 10px 30px rgba(255, 0, 119, 0.2);
+      transform: translateY(-5px);
+      border-color: var(--accent-neon);
+      box-shadow: 0 10px 25px rgba(0, 255, 204, 0.15);
     }
 
     .card-media {
       width: 100%;
-      height: 170px;
+      height: 160px;
       background: #000;
       position: relative;
     }
@@ -280,10 +258,10 @@
     }
 
     .card-content {
-      padding: 16px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       flex-grow: 1;
       justify-content: space-between;
       text-align: right;
@@ -291,7 +269,7 @@
     body[dir="ltr"] .card-content { text-align: left; }
 
     .item-name {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
@@ -300,68 +278,67 @@
     }
 
     .item-category {
-      font-size: 0.75rem;
-      color: var(--text-dim);
+      font-size: 0.7rem;
+      color: var(--text-muted);
       text-transform: uppercase;
-      font-family: 'Share Tech Mono', monospace;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .item-price-badge {
       align-self: flex-start;
-      background: linear-gradient(135deg, var(--neon-orange), #ff0055);
-      color: #fff;
-      font-weight: 800;
-      font-family: 'Share Tech Mono', monospace;
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      box-shadow: 0 4px 10px rgba(255, 85, 0, 0.3);
+      background: linear-gradient(135deg, #ffaa00, #ff5500);
+      color: #030305;
+      font-weight: 900;
+      font-family: 'Orbitron', sans-serif;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
     }
 
     .system-status-msg {
       text-align: center;
-      color: var(--text-dim);
-      padding: 80px;
-      font-size: 1.1rem;
-      font-family: 'Share Tech Mono', monospace;
+      color: var(--text-muted);
+      padding: 60px;
+      font-size: 1rem;
+      font-family: 'Orbitron', sans-serif;
     }
   </style>
 </head>
 <body>
 
-  <div class="app-wrapper">
-    <!-- Navbar المقسم والمرتب حديثاً -->
-    <header class="cyber-nav">
-      <!-- القسم الأيسر: الشعار والحالة -->
-      <div class="nav-left">
-        <div class="brand-box">
-          <h1 id="ui-title">RL SHOP MATRIX</h1>
-          <p id="ui-subtitle">نظام المراقبة والتحليل الحي لمتجر روكيت ليغ</p>
-        </div>
-        <div class="server-status-badge">
+  <div class="app-layout">
+    <!-- لوحة التحكم الجانبية الجديدة (بدل الـ Navbar التقليدي) -->
+    aside class="side-controller">
+      <div class="brand-area">
+        <h1 id="ui-title">RL MATRIX</h1>
+        <p id="ui-subtitle">نظام المراقبة والتحليل الحي لمتجر روكيت ليغ</p>
+      </div>
+
+      <div class="hud-widget">
+        <span class="hud-label" id="ui-status-label">حالة النظام</span>
+        <div class="server-status">
           <span class="status-dot"></span>
           <span id="ui-status">LIVE SYNC ACTIVE</span>
         </div>
       </div>
 
-      <!-- القسم اليميني: الأدوات والعداد واللغة -->
-      <div class="nav-right">
-        <div class="tool-group">
-          <span class="tool-label" id="ui-timer-label">التحديث:</span>
-          <div class="timer-display" id="countdown">00:00:00</div>
-        </div>
-        <button class="lang-switcher" onclick="toggleLanguage()" id="lang-btn">ENGLISH</button>
+      <div class="hud-widget">
+        <span class="hud-label" id="ui-timer-label">التحديث القادم:</span>
+        <div class="timer-box" id="countdown">00:00:00</div>
       </div>
-    </header>
 
-    <!-- Filter Navigation Tabs -->
-    <nav class="filter-tabs" id="filter-tabs">
-      <button class="tab-btn active" onclick="filterCategory('all', this)" id="tab-all">الكل / ALL</button>
-    </nav>
+      <button class="lang-btn-cyber" onclick="toggleLanguage()" id="lang-btn">ENGLISH</button>
+    </aside>
 
-    <!-- Dynamic Content Matrix -->
-    <main class="matrix-container" id="matrix-container">
-      <div class="system-status-msg" id="ui-loading">جاري تهيئة مصفوفة المتجر وسحب البيانات...</div>
+    <!-- منطقة المحتوى والعرض -->
+    <main class="main-content">
+      <nav class="filter-pills" id="filter-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all', this)" id="tab-all">الكل / ALL</button>
+      </nav>
+
+      <div class="matrix-container" id="matrix-container">
+        <div class="system-status-msg" id="ui-loading">جاري تهيئة مصفوفة المتجر وسحب البيانات...</div>
+      </div>
     </main>
   </div>
 
@@ -372,10 +349,11 @@
 
     const textDict = {
       ar: {
-        title: "RL SHOP MATRIX",
+        title: "RL MATRIX",
         subtitle: "نظام المراقبة والتحليل الحي لمتجر روكيت ليغ",
         status: "متصل وحي",
-        timerLabel: "التحديث:",
+        timerLabel: "التحديث القادم:",
+        statusLabel: "حالة النظام",
         loading: "جاري تهيئة مصفوفة المتجر وسحب البيانات...",
         empty: "لا توجد بيانات متاحة في المصفوفة حالياً.",
         error: "فشل الاتصال بنواة السيرفر.",
@@ -384,10 +362,11 @@
         items: "عنصر"
       },
       en: {
-        title: "RL SHOP MATRIX",
+        title: "RL MATRIX",
         subtitle: "Live Rocket League Shop Matrix Tracker",
         status: "LIVE SYNC ACTIVE",
-        timerLabel: "Resets:",
+        timerLabel: "Next Reset:",
+        statusLabel: "System Status",
         loading: "Initializing store matrix & fetching data...",
         empty: "No items available in the matrix right now.",
         error: "Failed to connect to core server.",
@@ -405,6 +384,7 @@
       document.getElementById('ui-subtitle').innerText = textDict[currentLang].subtitle;
       document.getElementById('ui-status').innerText = textDict[currentLang].status;
       document.getElementById('ui-timer-label').innerText = textDict[currentLang].timerLabel;
+      document.getElementById('ui-status-label').innerText = textDict[currentLang].statusLabel;
       document.getElementById('tab-all').innerText = textDict[currentLang].allTab;
       document.getElementById('lang-btn').innerText = textDict[currentLang].langBtn;
       
@@ -428,7 +408,7 @@
         buildFilterTabs();
         renderMatrix();
       } catch (err) {
-        document.getElementById('matrix-container').innerHTML = `<div class="system-status-msg" style="color: var(--neon-magenta);">${textDict[currentLang].error}</div>`;
+        document.getElementById('matrix-container').innerHTML = `<div class="system-status-msg" style="color: #ff0077;">${textDict[currentLang].error}</div>`;
       }
     }
 
@@ -517,7 +497,7 @@
           blockDiv.className = 'section-block';
           blockDiv.innerHTML = `
             <div class="block-title">
-              <span>✦ ${sectionName} ${subTitle !== "عنصر فردي / General" ? `‹ ${subTitle}` : ''}</span>
+              <span class="title-text">✦ ${sectionName} ${subTitle !== "عنصر فردي / General" ? `‹ ${subTitle}` : ''}</span>
               <span class="count">${subItems.length} ${textDict[currentLang].items}</span>
             </div>
             <div class="items-matrix-grid">${cardsHtml}</div>
