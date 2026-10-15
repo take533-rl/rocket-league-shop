@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RL SHOP MATRIX // CYBER-X EDITION</title>
+  <title>RL SHOP MATRIX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
       --card-surface: #0c1524;
       --neon-cyan: #00ffcc;
       --neon-purple: #9d00ff;
+      --neon-discord: #5865f2;
       --neon-red: #ff2a5f;
       --neon-twitch: #9146ff;
       --text-main: #f1f5f9;
@@ -40,7 +41,7 @@
     }
 
     /* =========================================
-       Cyber Navbar & Custom Animated Buttons
+       Cyber Navbar & 3 Animated Social Buttons
        ========================================= */
     .cyber-nav {
       background: var(--panel-glass);
@@ -79,7 +80,55 @@
       flex-wrap: wrap;
     }
 
-    /* --- زر يوتيوب بانميشن نبض ليزري أحمر --- */
+    /* --- 1. زر ديسكورد الهولوجرام --- */
+    .action-btn.discord-btn {
+      position: relative;
+      background: rgba(88, 101, 242, 0.15);
+      border: 1px solid var(--neon-discord);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(88, 101, 242, 0.2);
+    }
+    .action-btn.discord-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(transparent, rgba(0, 255, 204, 0.4), transparent 30%);
+      animation: radarRotate 4s linear infinite;
+      z-index: 1;
+    }
+    .action-btn.discord-btn::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: #090e17;
+      border-radius: 10px;
+      z-index: 2;
+      transition: background 0.3s;
+    }
+    .action-btn.discord-btn span, .action-btn.discord-btn svg {
+      position: relative;
+      z-index: 3;
+    }
+    .action-btn.discord-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px var(--neon-discord);
+    }
+    .action-btn.discord-btn:hover::after {
+      background: rgba(88, 101, 242, 0.3);
+    }
+
+    /* --- 2. زر يوتيوب الليزري --- */
     .action-btn.youtube-btn {
       position: relative;
       background: rgba(255, 42, 95, 0.1);
@@ -100,8 +149,7 @@
     .action-btn.youtube-btn::after {
       content: '';
       position: absolute;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       top: 0; left: -100%;
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: laserSweep 3s infinite;
@@ -112,7 +160,7 @@
       transform: translateY(-2px);
     }
 
-    /* --- زر تويتش بانميشن موجات أرجوانية متداخلة --- */
+    /* --- 3. زر تويتش المضيء --- */
     .action-btn.twitch-btn {
       position: relative;
       background: rgba(145, 70, 255, 0.1);
@@ -135,10 +183,8 @@
       transform: translateY(-2px) scale(1.02);
     }
 
-    @keyframes laserSweep {
-      0% { left: -100%; }
-      50%, 100% { left: 100%; }
-    }
+    @keyframes radarRotate { 100% { transform: rotate(360deg); } }
+    @keyframes laserSweep { 0% { left: -100%; } 50%, 100% { left: 100%; } }
 
     .timer-pill {
       background: rgba(255, 170, 0, 0.08);
@@ -318,7 +364,7 @@
 <body>
 
   <div class="nexus-container">
-    <!-- Navbar الجديد كلياً -->
+    <!-- Navbar المرتب بالأزرار الثلاثة -->
     <header class="cyber-nav">
       <div class="brand-box">
         <h1 id="app-title">RL SHOP MATRIX</h1>
@@ -326,7 +372,15 @@
       </div>
 
       <div class="nav-actions-group">
-        <!-- زر يوتيوب بانميشن ليزري -->
+        <!-- 1. زر ديسكورد -->
+        <a href="https://discord.gg/eSQUPtxndv" target="_blank" class="action-btn discord-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.027.058c.237.468.511.91.819 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+          </svg>
+          <span id="discord-text">Discord</span>
+        </a>
+
+        <!-- 2. زر يوتيوب -->
         <a href="https://www.youtube.com/@GoalCode" target="_blank" class="action-btn youtube-btn">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -335,13 +389,13 @@
           <span id="yt-text">Goal & Code</span>
         </a>
 
-        <!-- زر تويتش بانميشن تفاعلي -->
+        <!-- 3. زر تويتش -->
         <a href="https://www.twitch.tv/granny_gamer522" target="_blank" class="action-btn twitch-btn">
           <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
             <path d="M3.857 0 1 2.857v10.286h3.428V16l2.857-2.857H9.57L15 7.714V0H3.857zm9.714 7.428-2.285 2.285H9l-2 2v-2H4.428V1.143h9.143v6.285z"/>
             <path d="M11.143 3.428h1.143v3.428h-1.143V3.428zm-4 0h1.143v3.428H7.143V3.428z"/>
           </svg>
-          <span id="twitch-text">Twitch Stream</span>
+          <span id="twitch-text">Twitch</span>
         </a>
 
         <div class="timer-pill" id="countdown">--:--:--</div>
@@ -369,6 +423,7 @@
       ar: {
         title: "RL SHOP MATRIX",
         subtitle: "نظام المراقبة والتحليل الحي لمتجر روكيت ليغ",
+        discordText: "ديسكورد",
         loading: "جاري مزامنة بيانات المتجر...",
         empty: "لا توجد عناصر متاحة حالياً.",
         error: "تعذر الاتصال بخوادم المتجر.",
@@ -379,6 +434,7 @@
       en: {
         title: "RL SHOP MATRIX",
         subtitle: "Live Rocket League Shop Tracker",
+        discordText: "Discord",
         loading: "Syncing store data...",
         empty: "No items available right now.",
         error: "Failed to connect to shop servers.",
@@ -394,6 +450,7 @@
       
       document.getElementById('app-title').innerText = textDict[currentLang].title;
       document.getElementById('app-subtitle').innerText = textDict[currentLang].subtitle;
+      document.getElementById('discord-text').innerText = textDict[currentLang].discordText;
       document.getElementById('tab-all').innerText = textDict[currentLang].allTab;
       document.getElementById('lang-btn').innerText = textDict[currentLang].langBtn;
       
