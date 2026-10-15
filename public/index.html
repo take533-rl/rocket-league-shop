@@ -3,65 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RL Shop Matrix // Ultimate Edition</title>
+  <title>RL SHOP MATRIX // CYBER-X EDITION</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-main: #03060c;
-      --panel-bg: rgba(10, 16, 28, 0.85);
-      --card-bg: #09111e;
-      --neon-cyan: #00f3ff;
-      --neon-purple: #8a2be2;
-      --neon-discord: #5865f2;
-      --neon-pink: #ff0055;
-      --neon-orange: #ff5500;
-      --text-main: #f8fafc;
+      --bg-core: #020408;
+      --panel-glass: rgba(8, 14, 26, 0.88);
+      --card-surface: #0c1524;
+      --neon-cyan: #00ffcc;
+      --neon-purple: #9d00ff;
+      --neon-red: #ff2a5f;
+      --neon-twitch: #9146ff;
+      --text-main: #f1f5f9;
       --text-muted: #64748b;
-      --border-glow: rgba(0, 243, 255, 0.15);
+      --border-cyber: rgba(0, 255, 204, 0.2);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
 
     body {
-      background-color: var(--bg-main);
+      background-color: var(--bg-core);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(138, 43, 226, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(0, 243, 255, 0.1) 0px, transparent 50%);
+        radial-gradient(circle at 15% 15%, rgba(157, 0, 255, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(0, 255, 204, 0.06) 0%, transparent 45%);
       color: var(--text-main);
       min-height: 100vh;
       padding: 25px 15px;
-      overflow-x: hidden;
     }
 
-    .app-container {
+    .nexus-container {
       max-width: 1450px;
       margin: 0 auto;
     }
 
     /* =========================================
-       Navbar + Alien Animated Discord Button
+       Cyber Navbar & Custom Animated Buttons
        ========================================= */
-    .cyber-navbar {
-      background: var(--panel-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border-glow);
-      border-radius: 20px;
+    .cyber-nav {
+      background: var(--panel-glass);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--border-cyber);
+      border-radius: 22px;
       padding: 20px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
       flex-wrap: wrap;
       gap: 20px;
     }
 
-    .brand-title h1 {
+    .brand-box h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       font-weight: 900;
       background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
       -webkit-background-clip: text;
@@ -69,212 +67,208 @@
       letter-spacing: 1px;
     }
 
-    .brand-title p {
+    .brand-box p {
       color: var(--text-muted);
       font-size: 0.8rem;
     }
 
-    .nav-tools {
+    .nav-actions-group {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    /* --- Weird Futuristic Animated Discord Button --- */
-    .discord-alien-btn {
+    /* --- زر يوتيوب بانميشن نبض ليزري أحمر --- */
+    .action-btn.youtube-btn {
       position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, rgba(88, 101, 242, 0.2), rgba(138, 43, 226, 0.2));
-      border: 1px solid var(--neon-discord);
+      background: rgba(255, 42, 95, 0.1);
+      border: 1px solid var(--neon-red);
       color: #fff;
-      padding: 10px 22px;
+      padding: 9px 18px;
       border-radius: 12px;
-      font-weight: 800;
+      font-weight: 700;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       overflow: hidden;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(88, 101, 242, 0.3);
+      box-shadow: 0 0 15px rgba(255, 42, 95, 0.2);
     }
-
-    /* Alien Pulse Scanner Effect */
-    .discord-alien-btn::before {
+    .action-btn.youtube-btn::after {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        transparent, 
-        rgba(0, 243, 255, 0.4), 
-        transparent 30%
-      );
-      animation: radarRotate 4s linear infinite;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
+      top: 0; left: -100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: laserSweep 3s infinite;
+    }
+    .action-btn.youtube-btn:hover {
+      background: var(--neon-red);
+      box-shadow: 0 0 25px var(--neon-red);
+      transform: translateY(-2px);
     }
 
-    .discord-alien-btn::after {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      background: #090e17;
-      border-radius: 10px;
-      z-index: 2;
-      transition: background 0.3s;
-    }
-
-    .discord-alien-btn span, .discord-alien-btn svg {
+    /* --- زر تويتش بانميشن موجات أرجوانية متداخلة --- */
+    .action-btn.twitch-btn {
       position: relative;
-      z-index: 3;
+      background: rgba(145, 70, 255, 0.1);
+      border: 1px solid var(--neon-twitch);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(145, 70, 255, 0.2);
+    }
+    .action-btn.twitch-btn:hover {
+      background: var(--neon-twitch);
+      box-shadow: 0 0 25px var(--neon-twitch), 0 0 10px var(--neon-cyan);
+      transform: translateY(-2px) scale(1.02);
     }
 
-    .discord-alien-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 0 30px var(--neon-discord), 0 0 10px var(--neon-cyan);
+    @keyframes laserSweep {
+      0% { left: -100%; }
+      50%, 100% { left: 100%; }
     }
 
-    .discord-alien-btn:hover::after {
-      background: rgba(88, 101, 242, 0.3);
-    }
-
-    @keyframes radarRotate {
-      100% { transform: rotate(360deg); }
-    }
-
-    .timer-badge {
-      background: rgba(255, 85, 0, 0.08);
-      border: 1px solid rgba(255, 85, 0, 0.3);
-      color: var(--neon-orange);
-      padding: 8px 18px;
+    .timer-pill {
+      background: rgba(255, 170, 0, 0.08);
+      border: 1px solid rgba(255, 170, 0, 0.3);
+      color: #ffaa00;
+      padding: 8px 16px;
       border-radius: 12px;
       font-family: 'Orbitron', sans-serif;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
-    .lang-btn {
+    .lang-toggle-btn {
       background: transparent;
       border: 1px solid var(--neon-cyan);
       color: var(--neon-cyan);
-      padding: 9px 20px;
+      padding: 8px 16px;
       border-radius: 12px;
       font-weight: 700;
       cursor: pointer;
       transition: 0.3s;
     }
-    .lang-btn:hover {
+    .lang-toggle-btn:hover {
       background: var(--neon-cyan);
-      color: var(--bg-main);
+      color: var(--bg-core);
       box-shadow: 0 0 15px var(--neon-cyan);
     }
 
     /* =========================================
-       Tabs & Main Grid
+       Tabs & Matrix Grid System
        ========================================= */
-    .filter-bar {
+    .filter-tabs-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       overflow-x: auto;
-      padding-bottom: 15px;
+      padding-bottom: 12px;
       margin-bottom: 25px;
       scrollbar-width: thin;
-      scrollbar-color: var(--neon-cyan) var(--panel-bg);
+      scrollbar-color: var(--neon-cyan) var(--panel-glass);
     }
 
-    .tab-btn {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-glow);
+    .tab-pill {
+      background: var(--panel-glass);
+      border: 1px solid var(--border-cyber);
       color: var(--text-muted);
-      padding: 10px 24px;
+      padding: 10px 22px;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
       white-space: nowrap;
       transition: 0.3s;
     }
 
-    .tab-btn:hover, .tab-btn.active {
-      background: rgba(0, 243, 255, 0.1);
+    .tab-pill:hover, .tab-pill.active {
+      background: rgba(0, 255, 204, 0.08);
       border-color: var(--neon-cyan);
       color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
     }
 
-    .shop-matrix {
+    .matrix-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 35px;
+      gap: 30px;
     }
 
-    .section-card {
-      background: var(--panel-bg);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+    .matrix-section {
+      background: var(--panel-glass);
+      border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 20px;
       padding: 25px;
     }
 
-    .section-title {
-      font-size: 1.25rem;
+    .matrix-title {
+      font-size: 1.2rem;
       color: var(--neon-cyan);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
-      border-bottom: 1px dashed var(--border-glow);
+      border-bottom: 1px dashed var(--border-cyber);
       padding-bottom: 10px;
       font-weight: 700;
     }
 
-    .section-title span.count {
-      background: rgba(0, 243, 255, 0.1);
+    .matrix-title span.count-badge {
+      background: rgba(0, 255, 204, 0.1);
       color: var(--neon-cyan);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       padding: 2px 10px;
       border-radius: 6px;
       font-family: 'Orbitron', sans-serif;
     }
 
-    .cards-grid {
+    .items-grid-box {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
 
-    .item-card {
-      background: var(--card-bg);
+    .cyber-card {
+      background: var(--card-surface);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 14px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      position: relative;
       transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
-    .item-card:hover {
+    .cyber-card:hover {
       transform: translateY(-6px);
-      border-color: var(--neon-pink);
-      box-shadow: 0 10px 25px rgba(255, 0, 85, 0.25);
+      border-color: var(--neon-purple);
+      box-shadow: 0 10px 25px rgba(157, 0, 255, 0.25);
     }
 
-    .media-holder {
+    .card-img-wrap {
       width: 100%;
       height: 170px;
       background: #000;
     }
 
-    .media-holder img {
+    .card-img-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .card-body {
+    .card-details {
       padding: 15px;
       display: flex;
       flex-direction: column;
@@ -283,10 +277,10 @@
       justify-content: space-between;
       text-align: right;
     }
-    body[dir="ltr"] .card-body { text-align: left; }
+    body[dir="ltr"] .card-details { text-align: left; }
 
-    .item-name {
-      font-size: 0.98rem;
+    .item-name-txt {
+      font-size: 0.95rem;
       font-weight: 700;
       color: #fff;
       white-space: nowrap;
@@ -294,25 +288,25 @@
       text-overflow: ellipsis;
     }
 
-    .item-cat {
-      font-size: 0.75rem;
+    .item-cat-txt {
+      font-size: 0.72rem;
       color: var(--text-muted);
       text-transform: uppercase;
       font-family: 'Orbitron', sans-serif;
     }
 
-    .price-badge {
+    .item-price-tag {
       align-self: flex-start;
-      background: linear-gradient(135deg, var(--neon-orange), var(--neon-pink));
-      color: #fff;
-      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      font-weight: 900;
       font-family: 'Orbitron', sans-serif;
       padding: 4px 12px;
       border-radius: 8px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
-    .status-msg {
+    .system-info-msg {
       text-align: center;
       color: var(--text-muted);
       padding: 80px;
@@ -323,36 +317,46 @@
 </head>
 <body>
 
-  <div class="app-container">
-    <!-- Navbar -->
-    <header class="cyber-navbar">
-      <div class="brand-title">
+  <div class="nexus-container">
+    <!-- Navbar الجديد كلياً -->
+    <header class="cyber-nav">
+      <div class="brand-box">
         <h1 id="app-title">RL SHOP MATRIX</h1>
         <p id="app-subtitle">نظام المراقبة والتحليل الحي لمتجر روكيت ليغ</p>
       </div>
 
-      <div class="nav-tools">
-        <!-- زر الديسكورد بأنيميشن غريب وعصري -->
-        <a href="https://discord.gg/eSQUPtxndv" target="_blank" class="discord-alien-btn">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.027.058c.237.468.511.91.819 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+      <div class="nav-actions-group">
+        <!-- زر يوتيوب بانميشن ليزري -->
+        <a href="https://www.youtube.com/@GoalCode" target="_blank" class="action-btn youtube-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
           </svg>
-          <span id="discord-text">DISCORD SERVER</span>
+          <span id="yt-text">Goal & Code</span>
         </a>
 
-        <div class="timer-badge" id="countdown">--:--:--</div>
-        <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">ENGLISH</button>
+        <!-- زر تويتش بانميشن تفاعلي -->
+        <a href="https://www.twitch.tv/granny_gamer522" target="_blank" class="action-btn twitch-btn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M3.857 0 1 2.857v10.286h3.428V16l2.857-2.857H9.57L15 7.714V0H3.857zm9.714 7.428-2.285 2.285H9l-2 2v-2H4.428V1.143h9.143v6.285z"/>
+            <path d="M11.143 3.428h1.143v3.428h-1.143V3.428zm-4 0h1.143v3.428H7.143V3.428z"/>
+          </svg>
+          <span id="twitch-text">Twitch Stream</span>
+        </a>
+
+        <div class="timer-pill" id="countdown">--:--:--</div>
+        <button class="lang-toggle-btn" onclick="toggleLanguage()" id="lang-btn">ENGLISH</button>
       </div>
     </header>
 
-    <!-- Category Tabs -->
-    <nav class="filter-bar" id="filter-tabs">
-      <button class="tab-btn active" onclick="filterCategory('all', this)" id="tab-all">الكل / ALL</button>
+    <!-- Filter Tabs Bar -->
+    <nav class="filter-tabs-row" id="filter-tabs">
+      <button class="tab-pill active" onclick="filterCategory('all', this)" id="tab-all">الكل / ALL</button>
     </nav>
 
-    <!-- Shop Content Matrix -->
-    <main class="shop-matrix" id="shop-container">
-      <div class="status-msg" id="app-loading">جاري مزامنة بيانات المتجر...</div>
+    <!-- Main Content Matrix -->
+    <main class="matrix-wrapper" id="shop-container">
+      <div class="system-info-msg" id="app-loading">جاري مزامنة بيانات المتجر...</div>
     </main>
   </div>
 
@@ -365,7 +369,6 @@
       ar: {
         title: "RL SHOP MATRIX",
         subtitle: "نظام المراقبة والتحليل الحي لمتجر روكيت ليغ",
-        discordText: "سيرفر الديسكورد",
         loading: "جاري مزامنة بيانات المتجر...",
         empty: "لا توجد عناصر متاحة حالياً.",
         error: "تعذر الاتصال بخوادم المتجر.",
@@ -376,7 +379,6 @@
       en: {
         title: "RL SHOP MATRIX",
         subtitle: "Live Rocket League Shop Tracker",
-        discordText: "DISCORD SERVER",
         loading: "Syncing store data...",
         empty: "No items available right now.",
         error: "Failed to connect to shop servers.",
@@ -392,7 +394,6 @@
       
       document.getElementById('app-title').innerText = textDict[currentLang].title;
       document.getElementById('app-subtitle').innerText = textDict[currentLang].subtitle;
-      document.getElementById('discord-text').innerText = textDict[currentLang].discordText;
       document.getElementById('tab-all').innerText = textDict[currentLang].allTab;
       document.getElementById('lang-btn').innerText = textDict[currentLang].langBtn;
       
@@ -416,7 +417,7 @@
         buildFilterTabs();
         renderMatrix();
       } catch (err) {
-        document.getElementById('shop-container').innerHTML = `<div class="status-msg" style="color: var(--neon-pink);">${textDict[currentLang].error}</div>`;
+        document.getElementById('shop-container').innerHTML = `<div class="system-info-msg" style="color: var(--neon-red);">${textDict[currentLang].error}</div>`;
       }
     }
 
@@ -455,16 +456,16 @@
 
     function buildFilterTabs() {
       const tabsContainer = document.getElementById('filter-tabs');
-      tabsContainer.innerHTML = `<button class="tab-btn ${activeFilter === 'all' ? 'active' : ''}" onclick="filterCategory('all', this)">${textDict[currentLang].allTab}</button>`;
+      tabsContainer.innerHTML = `<button class="tab-pill ${activeFilter === 'all' ? 'active' : ''}" onclick="filterCategory('all', this)">${textDict[currentLang].allTab}</button>`;
 
       for (const sectionName of Object.keys(rawShopData)) {
-        tabsContainer.innerHTML += `<button class="tab-btn ${activeFilter === sectionName ? 'active' : ''}" onclick="filterCategory('${sectionName}', this)">${sectionName}</button>`;
+        tabsContainer.innerHTML += `<button class="tab-pill ${activeFilter === sectionName ? 'active' : ''}" onclick="filterCategory('${sectionName}', this)">${sectionName}</button>`;
       }
     }
 
     function filterCategory(categoryName, btnElement) {
       activeFilter = categoryName;
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pill').forEach(btn => btn.classList.remove('active'));
       btnElement.classList.add('active');
       renderMatrix();
     }
@@ -472,7 +473,7 @@
     function renderMatrix() {
       const container = document.getElementById('shop-container');
       if (!rawShopData || Object.keys(rawShopData).length === 0) {
-        container.innerHTML = `<div class="status-msg">${textDict[currentLang].empty}</div>`;
+        container.innerHTML = `<div class="system-info-msg">${textDict[currentLang].empty}</div>`;
         return;
       }
 
@@ -487,28 +488,28 @@
 
         for (const [subTitle, subItems] of Object.entries(subGroups)) {
           const cardsHtml = subItems.map(item => `
-            <div class="item-card">
-              <div class="media-holder">
+            <div class="cyber-card">
+              <div class="card-img-wrap">
                 <img src="${item.image || 'https://via.placeholder.com/300x200?text=Rocket+League'}" alt="${item.name || 'Item'}">
               </div>
-              <div class="card-body">
+              <div class="card-details">
                 <div>
-                  <div class="item-name" title="${item.name || ''}">${item.name || 'Unknown'}</div>
-                  <div class="item-cat">${item.category || ''}</div>
+                  <div class="item-name-txt" title="${item.name || ''}">${item.name || 'Unknown'}</div>
+                  <div class="item-cat-txt">${item.category || ''}</div>
                 </div>
-                <div class="price-badge">${item.price || 0} CR</div>
+                <div class="item-price-tag">${item.price || 0} CR</div>
               </div>
             </div>
           `).join('');
 
           const sectionDiv = document.createElement('div');
-          sectionDiv.className = 'section-card';
+          sectionDiv.className = 'matrix-section';
           sectionDiv.innerHTML = `
-            <div class="section-title">
+            <div class="matrix-title">
               <span>✦ ${sectionName} ${subTitle !== "عنصر منفرد / General Item" ? `‹ ${subTitle}` : ''}</span>
-              <span class="count">${subItems.length} ${textDict[currentLang].items}</span>
+              <span class="count-badge">${subItems.length} ${textDict[currentLang].items}</span>
             </div>
-            <div class="cards-grid">${cardsHtml}</div>
+            <div class="items-grid-box">${cardsHtml}</div>
           `;
           
           container.appendChild(sectionDiv);
